@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>百援AI汽修门店诊断报告</title>
+  <link rel="dns-prefetch" href="//github.io">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #fafafa;
+      color: #333;
+      line-height: 1.6;
+    }
+    .header { text-align: center; margin-bottom: 30px; }
+    .header h1 { color: #e53935; }
+    .metric { margin: 12px 0; }
+    .metric strong { color: #1976d2; }
+    .issue-box {
+      background: #fff8e1;
+      padding: 16px;
+      border-left: 4px solid #ffc107;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .footer {
+      margin-top: 30px;
+      color: #777;
+      font-size: 0.9em;
+      text-align: center;
+      border-top: 1px solid #eee;
+      padding-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🎯 百援AI汽修门店诊断报告</h1>
+    <p id="store-name">加载中...</p>
+  </div>
+
+  <h2>📊 核心经营指标</h2>
+  <div id="metrics"></div>
+
+  <h2>❗ 诊断发现</h2>
+  <div class="issue-box" id="diagnosis">正在分析...</div>
+
+  <div class="footer">
+    💡 本报告由百援AI智能生成 · 建议在微信或浏览器中查看<br/>
+    📞 如需经营提升方案，请联系您的百援服务顾问
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const storeName = decodeURIComponent(params.get('storeName') || '未知门店');
+    const efficiency = params.get('efficiency') || 'N/A';
+    const utilization = params.get('utilization') || 'N/A';
+    const publicRatio = params.get('publicRatio') || 'N/A';
+    const issues = decodeURIComponent(params.get('issues') || '暂无诊断信息');
+
+    document.getElementById('store-name').textContent = storeName;
+    document.getElementById('metrics').innerHTML = `
+      <div class="metric">• 工位利用率：<strong>${utilization}%</strong></div>
+      <div class="metric">• 人效比：<strong>${efficiency}</strong>（健康线≥2.0）</div>
+      <div class="metric">• 公域客户占比：<strong>${publicRatio}%</strong></div>
+    `;
+    document.getElementById('diagnosis').textContent = issues;
+  </script>
+</body>
+</html>
