@@ -3,71 +3,359 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>百援AI汽修门店诊断报告</title>
-  <link rel="dns-prefetch" href="//github.io">
+  <title>百援AI汽修门店业绩诊断报告</title>
   <style>
+    :root {
+      --primary: #e53935;
+      --success: #4caf50;
+      --warning: #ff9800;
+      --info: #2196f3;
+      --light-gray: #f5f5f5;
+      --border: #e0e0e0;
+    }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
       max-width: 800px;
       margin: 0 auto;
       padding: 20px;
-      background: #fafafa;
-      color: #333;
-      line-height: 1.6;
     }
-    .header { text-align: center; margin-bottom: 30px; }
-    .header h1 { color: #e53935; }
-    .metric { margin: 12px 0; }
-    .metric strong { color: #1976d2; }
-    .issue-box {
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+    .header h1 {
+      color: var(--primary);
+      margin: 0 0 10px;
+      font-size: 24px;
+    }
+    .manager-info {
+      font-size: 16px;
+      color: #555;
+      margin-top: 8px;
+    }
+    .section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #fafafa;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .section h2 {
+      color: var(--primary);
+      margin-top: 0;
+      font-size: 20px;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+    .metric-label { font-weight: bold; color: #444; }
+    .metric-value { color: var(--info); }
+    .issue-item {
       background: #fff8e1;
-      padding: 16px;
-      border-left: 4px solid #ffc107;
-      margin: 20px 0;
+      padding: 12px;
+      margin: 12px 0;
+      border-left: 3px solid var(--warning);
       border-radius: 0 4px 4px 0;
     }
-    .footer {
-      margin-top: 30px;
-      color: #777;
-      font-size: 0.9em;
+    .map-placeholder, .video-placeholder {
       text-align: center;
-      border-top: 1px solid #eee;
+      margin: 15px 0;
+      color: #777;
+      font-style: italic;
+    }
+    img.map-image {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    video.case-video {
+      width: 100%;
+      max-height: 300px;
+      margin: 15px 0;
+      border-radius: 8px;
+    }
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .action-btn {
+      flex: 1;
+      min-width: 200px;
+      padding: 12px;
+      background: var(--info);
+      color: white;
+      text-align: center;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .footer-slogan {
+      text-align: center;
+      margin-top: 30px;
       padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: #666;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    /* 打印样式 */
+    @media print {
+      body { font-size: 14pt; }
+      .container { padding: 10px; }
+      .header { page-break-after: avoid; }
+      .action-buttons a { 
+        color: black !important; 
+        background: #eee !important;
+        text-decoration: none;
+      }
+      .print-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 12pt;
+        color: #555;
+        padding: 8px;
+        background: white;
+        border-top: 1px solid #ccc;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <h1>🎯 百援AI汽修门店诊断报告</h1>
-    <p id="store-name">加载中...</p>
-  </div>
+  <div class="container">
+    <!-- 首页标题 + 招商经理信息 -->
+    <div class="header">
+      <h1>百援AI汽修门店业绩诊断报告</h1>
+      <div class="manager-info" id="manager-info">加载中...</div>
+    </div>
 
-  <h2>📊 核心经营指标</h2>
-  <div id="metrics"></div>
+    <!-- 模块1：基础画像分析 -->
+    <div class="section">
+      <h2>1. 基础画像分析</h2>
+      <div id="module1-content">正在加载...</div>
+    </div>
 
-  <h2>❗ 诊断发现</h2>
-  <div class="issue-box" id="diagnosis">正在分析...</div>
+    <!-- 模块2：业绩潜力测算 -->
+    <div class="section">
+      <h2>2. 业绩潜力测算</h2>
+      <div id="module2-content">正在加载...</div>
+    </div>
 
-  <div class="footer">
-    💡 本报告由百援AI智能生成 · 建议在微信或浏览器中查看<br/>
-    📞 如需经营提升方案，请联系您的百援服务顾问
+    <!-- 模块3：运营痛点诊断 -->
+    <div class="section">
+      <h2>3. 运营痛点诊断</h2>
+      <div id="module3-content">正在加载...</div>
+    </div>
+
+    <!-- 模块4：定制化提升方案 -->
+    <div class="section">
+      <h2>4. 定制化提升方案</h2>
+      <div id="module4-content">正在加载...</div>
+    </div>
+
+    <!-- 模块5：百援赋能价值展示 -->
+    <div class="section">
+      <h2>5. 百援赋能价值展示</h2>
+      <div id="module5-content">正在加载...</div>
+    </div>
+
+    <!-- 模块6：行动建议与下一步 -->
+    <div class="section">
+      <h2>6. 行动建议与下一步</h2>
+      <div id="module6-content">正在加载...</div>
+      
+      <div class="action-buttons">
+        <a href="#" class="action-btn" onclick="alert('请向您的招商经理申请重新生成报告')">申请重新生成报告</a>
+        <a href="tel:4001234567" class="action-btn">联系公司客服</a>
+      </div>
+    </div>
+
+    <!-- 全局底部标语 -->
+    <div class="footer-slogan">百年精养，让开店有章法，让养车更简单</div>
+    
+    <!-- 打印专用页脚（仅打印时显示） -->
+    <div class="print-footer" id="print-footer"></div>
   </div>
 
   <script>
+    // 解析 URL 参数
     const params = new URLSearchParams(window.location.search);
-    const storeName = decodeURIComponent(params.get('storeName') || '未知门店');
-    const efficiency = params.get('efficiency') || 'N/A';
-    const utilization = params.get('utilization') || 'N/A';
-    const publicRatio = params.get('publicRatio') || 'N/A';
-    const issues = decodeURIComponent(params.get('issues') || '暂无诊断信息');
+    const getParam = (key, fallback = '暂缺数据') => {
+      const val = params.get(key);
+      return val !== null && val !== '' ? decodeURIComponent(val) : fallback;
+    };
 
-    document.getElementById('store-name').textContent = storeName;
-    document.getElementById('metrics').innerHTML = `
-      <div class="metric">• 工位利用率：<strong>${utilization}%</strong></div>
-      <div class="metric">• 人效比：<strong>${efficiency}</strong>（健康线≥2.0）</div>
-      <div class="metric">• 公域客户占比：<strong>${publicRatio}%</strong></div>
+    // 获取招商经理信息
+    const managerName = getParam('manager_name', '未提供');
+    const managerPhone = getParam('manager_phone', '未提供');
+
+    // 渲染页眉
+    document.getElementById('manager-info').innerHTML = `
+      招商经理：${managerName}<br>
+      联系电话：${managerPhone}
     `;
-    document.getElementById('diagnosis').textContent = issues;
+
+    // 打印页脚
+    document.getElementById('print-footer').textContent = 
+      `本报告由百援精养招商经理 ${managerName} 提供`;
+
+    // ----------------------------
+    // 模块1：基础画像分析
+    // ----------------------------
+    const storeName = getParam('store_name');
+    const location = getParam('location');
+    const bayCount = parseFloat(getParam('bay_count', '0'));
+    const dailyBays = parseFloat(getParam('daily_bays', '0'));
+    const techTotal = parseFloat(getParam('technician_total', '0'));
+    const techMaster = getParam('technician_master', '暂缺');
+    const techMiddle = getParam('technician_middle', '暂缺');
+    const techJunior = getParam('technician_junior', '暂缺');
+    const mapImageUrl = getParam('map_image_url', '');
+
+    let utilization = '暂缺';
+    if (bayCount > 0 && dailyBays > 0) {
+      utilization = Math.round((dailyBays / (bayCount * 8)) * 100);
+    }
+
+    let module1HTML = `
+      <p><strong>门店名称：</strong>${storeName}</p>
+      <p><strong>地理位置：</strong>${location}</p>
+      <p><strong>工位数量：</strong>${bayCount} 个（行业一类标准 ≥5）</p>
+      <p><strong>工位利用率：</strong>${utilization}%</p>
+      <p><strong>技师团队：</strong>共 ${techTotal} 人（大工：${techMaster}，中工：${techMiddle}，小工：${techJunior}）</p>
+    `;
+
+    if (mapImageUrl && mapImageUrl !== '暂缺数据') {
+      module1HTML += `<img src="${mapImageUrl}" alt="区域竞品密度图" class="map-image">`;
+    } else {
+      module1HTML += `<div class="map-placeholder">区域竞品密度地图待补充</div>`;
+    }
+
+    document.getElementById('module1-content').innerHTML = module1HTML;
+
+    // ----------------------------
+    // 模块2：业绩潜力测算
+    // ----------------------------
+    const monthlyRevenue = parseFloat(getParam('monthly_revenue', '0'));
+    const avgTicket = monthlyRevenue > 0 && dailyBays > 0 ? 
+      Math.round(monthlyRevenue / (dailyBays * 30)) : 350;
+
+    const theoreticalRevenue = bayCount * 8 * 30 * avgTicket;
+    const currentRevenue = monthlyRevenue;
+
+    let module2HTML = `
+      <div class="metric-row">
+        <span class="metric-label">当前月产值：</span>
+        <span class="metric-value">¥${currentRevenue.toLocaleString()}</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">理论最大产值：</span>
+        <span class="metric-value">¥${theoreticalRevenue.toLocaleString()}</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">行业客单价参考：</span>
+        <span class="metric-value">¥300–400（基础保养）</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">独立店毛利率：</span>
+        <span class="metric-value">40–45%</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">百援精养毛利率：</span>
+        <span class="metric-value">45–52%</span>
+      </div>
+    `;
+    document.getElementById('module2-content').innerHTML = module2HTML;
+
+    // ----------------------------
+    // 模块3：运营痛点诊断
+    // ----------------------------
+    const onlineRatio = parseFloat(getParam('online_traffic_ratio', '100'));
+    const churnRate = parseFloat(getParam('customer_churn_rate', '0'));
+    const partsPremium = parseFloat(getParam('parts_cost_premium', '0'));
+    const dailyRevenuePerTech = techTotal > 0 ? Math.round(currentRevenue / (techTotal * 30)) : 0;
+
+    const issues = [];
+    if (utilization !== '暂缺' && utilization < 50) {
+      issues.push("工位利用率低：当前<50%，低于行业基准66%");
+    }
+    if (dailyRevenuePerTech > 0 && dailyRevenuePerTech < 3000) {
+      issues.push(`技师人效不足：当前${dailyRevenuePerTech}元/日，低于百援标准5000元/日`);
+    }
+    if (onlineRatio < 10) {
+      issues.push("营销手段落后：线上获客占比<10%，缺乏精准流量");
+    }
+    if (partsPremium > 15) {
+      issues.push(`供应链成本高：配件采购价高于百援集采价${partsPremium}%`);
+    }
+    if (churnRate > 60) {
+      issues.push(`客户流失率高：年流失率>${churnRate}%，远高于百援会员体系的30%`);
+    }
+
+    let module3HTML = '';
+    if (issues.length > 0) {
+      issues.forEach(issue => {
+        module3HTML += `<div class="issue-item">❗ ${issue}</div>`;
+      });
+    } else {
+      module3HTML = '<p>未识别出明显经营短板，建议补充更多数据以获得精准诊断。</p>';
+    }
+    document.getElementById('module3-content').innerHTML = module3HTML;
+
+    // ----------------------------
+    // 模块4：定制化提升方案
+    // ----------------------------
+    document.getElementById('module4-content').innerHTML = `
+      <p><strong>短期（0-3个月）：</strong>部署百少侠门店管理系统，优化工位调度，目标利用率≥60%</p>
+      <p><strong>中期（3-6个月）：</strong>开展SA与技师认证培训，提升标准化服务能力</p>
+      <p><strong>长期（6-12个月）：</strong>优化服务项目组合（基础保养+深化养护+油卡销售），提升客单价与复购率</p>
+    `;
+
+    // ----------------------------
+    // 模块5：百援赋能价值展示
+    // ----------------------------
+    const caseVideoUrl = getParam('case_video_url', '');
+    let module5HTML = `
+      <p><strong>效率提升对比：</strong></p>
+      <ul>
+        <li>工位利用率：独立店<66% → 百援75%</li>
+        <li>技师人效：独立店<3000元/日 → 百援5000元/日</li>
+        <li>客户复购率：独立店<40% → 百援65%</li>
+      </ul>
+      <p><strong>成功案例：</strong>天津安信店，加盟后月产值从5万提升至21万（增长320%）</p>
+    `;
+
+    if (caseVideoUrl && caseVideoUrl !== '暂缺数据') {
+      module5HTML += `<video controls class="case-video"><source src="${caseVideoUrl}" type="video/mp4">您的浏览器不支持视频播放。</video>`;
+    }
+
+    document.getElementById('module5-content').innerHTML = module5HTML;
+
+    // ----------------------------
+    // 模块6：行动建议
+    // ----------------------------
+    document.getElementById('module6-content').innerHTML = `
+      <p>1. <strong>申请重新生成报告</strong>：首次数据可能不完整，欢迎后续再次评估</p>
+      <p>2. <strong>联系公司客服</strong>：了解加盟政策、培训体系、供应链支持等详情</p>
+    `;
   </script>
 </body>
 </html>
